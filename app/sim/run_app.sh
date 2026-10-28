@@ -68,7 +68,7 @@ COMMON_ARGS=(
     -e QT_X11_NO_MITSHM=1
     -v "$(pwd)/config/preferences.xml:/home/hostuser/workspace/.config/Webots/preferences.xml"
     -v "$(pwd)/.cache:/home/hostuser/.cache/Cyberbotics/Webots"
-    -v "$(pwd)/.log:/home/hostuser/workspace/sim/logs"
+    -v "$(pwd)/.logs:/home/hostuser/workspace/sim/logs"
     -p 7447:7447/tcp
     -p 7447:7447/udp
 )
