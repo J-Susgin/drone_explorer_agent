@@ -51,5 +51,8 @@ qtcreator-*
 CATKIN_IGNORE
 
 # Logs & cache
-.log
-.cache
+.cache/**
+!.cache/.gitkeep
+
+.log/**
+!.log/.gitkeep
