@@ -1,34 +1,17 @@
 # TODO
 
-## DEVOPS
+Currently keeping webots but communicating with Zenoh
 
-### CI/CD
-- Create integration tests
-- Finish CI
-- Finish CD 
+## Infrastructure
+- Switch from docker compose to kubernetes to handle scalability -> feature/kube_infra
+- Scale the MEMORY to a continuous and infinite action space -> feature/memory
+- Update the system as a set of modular components (Reality, Memory, Agent, UI, Fleet, Communications) -> feature/architecture
 
-### AZURE
-- Create account 
-- Push on Azure
-- Execute on Azure 
 
-## FUNCTIONS
+## Components
+- AGENT: Apply SOC on the agent to separate the subcomponents into modular entities -> feature/agent
+- HMI: Create simple UI to communicate with the robot and see the progression -> feature/hmi
+- MEMORY: Create a database where to store the time, spatial, semantic and vision data -> feature/memory
+- MULTI-AGENT: Create a multi-agent controller -> feature/fleet
+- SLAM: Create a SLAM subcomponent into the agent -> feature/slam
 
-### CHATBOT
-Manage the communication between the system and the user.
-- USER: set the goal to the system.
-- CHATBOT: understand the goal, explain the situation (errors, progress...).
-
-### BRIDGE
-Manage the communication between the system communications.
-- BROKER: manage the communication between the controller and the system.
-- MANAGER: manage the internal data and orchestrate the function calls.
-
-### DATABASE
-Store the data entry and retrieval.
-- ARCHIVIST: read and write files.
-- KNOWLEDGE: data processing, embeddings.
-
-### SIMULATOR
-Emulate real world data entries and robot execution.
-- CONTROLLER: get raw data and execute command.

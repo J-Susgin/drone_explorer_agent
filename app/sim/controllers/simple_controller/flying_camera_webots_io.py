@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 # ===== ROBOT CONTROLLER =====
-class RobotController:
+class WebotsIO:
     """Encapsulates access to robot position/orientation fields."""
     def __init__(self, trs_field, rot_field):
         self._tf = trs_field
