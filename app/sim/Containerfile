@@ -1,0 +1,54 @@
+FROM docker.io/cyberbotics/webots:latest
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# System deps: OpenCV, Qt/xcb, plus Xvfb + VNC + noVNC for remote viewing
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-pip \
+    python3-dev \
+    tree \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libxrender-dev \
+    libxkbcommon-x11-0 \
+    libxcb1 \
+    libxcb-xinerama0 \
+    libxcb-cursor0 \
+    libglu1-mesa \
+    xvfb \
+    x11vnc \
+    novnc \
+    websockify \
+    fluxbox \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python deps
+RUN pip install --no-cache-dir \
+    numpy \
+    opencv-python \
+    eclipse-zenoh \
+    pillow \
+    pytest
+
+ENV QT_X11_NO_MITSHM=1 \
+    WEBOTS_HEADLESS=1 \
+    WEBOTS_SUPPRESS_ROOT_WARNING=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/home/hostuser/workspace/sim
+
+WORKDIR /home/hostuser/workspace/sim
+
+COPY controllers ./controllers
+COPY protos ./protos
+COPY worlds ./worlds
+COPY dummy_io_testers ./dummy_io_testers
+COPY config/preferences.xml /home/hostuser/workspace/.config/Webots/preferences.xml
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# noVNC (stream mode)
+EXPOSE 6080
+
+ENTRYPOINT ["/entrypoint.sh"]

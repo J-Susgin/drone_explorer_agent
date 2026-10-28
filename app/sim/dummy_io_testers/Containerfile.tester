@@ -1,0 +1,22 @@
+FROM docker.io/library/python:3.10-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies for OpenCV GUI and X11 rendering
+RUN apt-get update && apt-get install -y \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libxkbcommon-x11-0 \
+    libxcb1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python packages once
+RUN pip install --no-cache-dir \
+    eclipse-zenoh \
+    opencv-python \
+    numpy
+
+WORKDIR /workspace
