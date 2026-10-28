@@ -69,6 +69,8 @@ cd sim
 Add `--build` before the script name to rebuild the tester image.
 Port 8081 is forwarded the same way as 6080.
 
+> `zenoh_sub_camera.py` needs special image forwarding when performing stream.
+
 ## Zenoh topics
 
 | Topic               | Direction  | Payload                                              |
