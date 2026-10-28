@@ -110,6 +110,7 @@ def main():
   supervisor, robot_controller, camera, timestep = setup_supervisor()
   zenoh_node = ZenohNode()
   try:
+    print("[INFO] Starting.")
     run_main_loop(supervisor, timestep, robot_controller, camera, zenoh_node)
   except KeyboardInterrupt:
     print("[INFO] Interrupted.")
