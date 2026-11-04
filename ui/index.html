@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Drone view</title>
+</head>
+<body style="font-family: sans-serif">
+  <p>Status: <span id="status">connecting...</span></p>
+  <img id="cam" width="640" height="480" alt="camera" style="border:1px solid #888">
+  <pre id="pose">no pose yet</pre>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const url = params.get("gw") || "ws://100.95.220.22:8000/ws";
+
+  const statusEl = document.getElementById("status");
+  const camEl = document.getElementById("cam");
+  const poseEl = document.getElementById("pose");
+
+  const ws = new WebSocket(url);
+  ws.binaryType = "blob";
+  let lastUrl = null;
+
+  ws.onopen = () => statusEl.textContent = "connected to " + url;
+  ws.onclose = () => statusEl.textContent = "disconnected";
+  ws.onerror = () => statusEl.textContent = "error (is Tailscale up?)";
+
+  ws.onmessage = (ev) => {
+    if (typeof ev.data === "string") {
+      const data = JSON.parse(ev.data);
+      poseEl.textContent = "pose7d: " + JSON.stringify(data.pose7d);
+    } else {
+      const newUrl = URL.createObjectURL(ev.data);
+      camEl.src = newUrl;
+      if (lastUrl) URL.revokeObjectURL(lastUrl);
+      lastUrl = newUrl;
+    }
+  };
+</script>
+</body>
+</html>

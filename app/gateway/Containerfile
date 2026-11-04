@@ -1,0 +1,11 @@
+FROM docker.io/library/python:3.11-slim
+
+# Set this to the same Zenoh version the simulator image uses
+# (run `pip show eclipse-zenoh` inside the sim container to check).
+ARG ZENOH_VERSION=1.6.2
+
+WORKDIR /app
+RUN pip install --no-cache-dir eclipse-zenoh==${ZENOH_VERSION} fastapi uvicorn
+COPY gateway.py .
+
+CMD ["uvicorn", "gateway:app", "--host", "0.0.0.0", "--port", "8000"]
