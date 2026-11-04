@@ -1,0 +1,7 @@
+FROM docker.io/library/python:3.11-slim
+
+WORKDIR /srv
+COPY index.html .
+
+# 0.0.0.0 inside the container is required so the port mapping can reach it
+CMD ["python", "-m", "http.server", "8080", "--bind", "0.0.0.0"]
